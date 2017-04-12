@@ -1,6 +1,8 @@
 %{   
    int Line = 1, Pos = 1;
 %}
+NUM (\.[0-9]+)|([0-9]+(\.[0-9]*)?([eE][+-]?[0-9]+)?)
+ID [A-Za-z](([A-Za-z]|[0-9]|_)*([A-Za-z]|[0-9]))?
 
 %%
    /*Arithmetic Operators*/
@@ -50,9 +52,12 @@
 
    /*Indentifiers and numbers*/
 
-(\.[0-9]+)|([0-9]+(\.[0-9]*)?([eE][+-]?[0-9]+)?)   {printf("NUMBER %s\n", yytext); Pos += yyleng;}
+{NUM}             {printf("NUMBER %s\n", yytext); Pos += yyleng;}
+{NUM}+{ID}        {printf("Error at line %d, column %d: indentifier \"%s\" must begin with a letter\n", Line, Pos, yytext); exit(0);}
+"_"+{ID}          {printf("Error at line %d, column %d: indentifier \"%s\" cannot start with an underscore\n", Line, Pos, yytext); exit(0);}
+{ID}"_"+          {printf("Error at line %d, column %d: indentifier \"%s\" cannot end with an underscore\n", Line, Pos, yytext); exit(0);}
 
-[A-Za-z](([A-Za-z]|[0-9]|_)*([A-Za-z]|[0-9]))?     {printf("INDENT %s\n", yytext); Pos += yyleng;}
+{ID}              {printf("INDENT %s\n", yytext); Pos += yyleng;}
 
    /*Speacial Cases*/
 ";"   {printf("SEMICOLON\n");            Pos += yyleng;}
