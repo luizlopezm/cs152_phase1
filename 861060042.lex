@@ -1,7 +1,19 @@
+/* Assignment: CS 152 Phase I
+ * Spring Quarter 2017
+ * Luiz Lopez Nunez
+ * 861060042
+ * Class: CS 152 
+ * Section: 21
+ */
+
+
+
+
 %{   
    int Line = 1, Pos = 1;
 %}
 NUM (\.[0-9]+)|([0-9]+(\.[0-9]*)?([eE][+-]?[0-9]+)?)
+      /*Borrowed ID Format from online Github Repo*/
 ID [A-Za-z](([A-Za-z]|[0-9]|_)*([A-Za-z]|[0-9]))?
 
 %%
